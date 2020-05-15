@@ -4,7 +4,7 @@
 
 %Implemented by Daniele Porello on the basis of the ontology
 %developed by Claudio Masolo and Laure Vieu
-%with contributions by Stefano Borgo, Roberta Ferrario.
+%with contributions by Stefano Borgo and Roberta Ferrario.
 
 %May 2020
 
@@ -28,6 +28,7 @@ fof(ax_taxonomy_disj, axiom, (~?[X]: (ob(X) & time(X)))).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Mereology of objects
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 fof(ax_part_objects, axiom, (![X,Y]: (part(X,Y) => (ob(X) & ob(Y))))).
 
 fof(ax_part_rifl, axiom, (![X]: (ob(X) => part(X,X)))).
@@ -46,13 +47,13 @@ fof(ax_part_proper_part, axiom, (![X,Y]: (properPart(Y,X) <=> (part(Y,X) & ~part
 
 fof(ax_part_sum, axiom, (![Z,X,Y]: (sum(Z,X,Y) <=> ![W]:((overlap(W,Z) <=> (overlap(W,X) | overlap(W,Y))))))).
 
-%fof(ax_part_sum_existence, axiom, (![X,Y]: (underlap(X,Y) => (?[Z]:(![W]:((overlap(W,Z) <=> (overlap(W,X) | overlap(W,Y))))))))).
+fof(ax_part_sum_existence, axiom, (![X,Y]: (underlap(X,Y) => (?[Z]:(![W]:((overlap(W,Z) <=> (overlap(W,X) | overlap(W,Y))))))))).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Atoms and atomic parts
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Atoms (times are atoms)
+%Atoms (instances of time are atoms)
 
 fof(ax_atom, axiom, (![X]: (atom(X) <=> ~?[Y]:(properPart(Y,X))))).
 
@@ -85,9 +86,10 @@ fof(ax_wholly_exist, axiom, ((![X,T]: (existsW(X,T) <=> (exists(X,T) & ![Y]: (pa
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Pluralities, composites, and collectives
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %Constitutions, const1 and const2
 
 %Pluralities are mereological sums.
@@ -98,7 +100,7 @@ fof(ax_wholly_exist, axiom, ((![X,T]: (existsW(X,T) <=> (exists(X,T) & ![Y]: (pa
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Added ob(X) as times are atom, so they could be constituted.
+%Ob(X) added, as times are atom, otherwise they could be constituted:
 
 fof(ax_const1, axiom, (![X,Y,T]: (const1(X,Y,T) => (exists(X,T) & existsW(Y,T) & ob(X) & ob(Y) & atom(X) & ~atom(Y) & time(T))))).
 
@@ -130,11 +132,10 @@ fof(ax_const2_unicity_decomposition, axiom, (![X,Y,Z,T]: ((const2(X,Y,T) & const
 %Composite, covering
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%fof(ax_const1_covering, axiom, (![X,Y,Z,T]: ((const1(X,Y,T) & const1(X,Z,T)) => ~(part(Y,Z) & ~(Y=Z))))).
+fof(ax_const1_covering, axiom, (![X,Y,Z,T]: ((const1(X,Y,T) & const1(X,Z,T)) => ~(part(Y,Z) & ~(Y=Z))))).
 
-fof(ax_const1_covering, axiom, (![X,Y,Z,T]: ((const1(X,Y,T) & const1(X,Z,T)) => (~part(Y,Z) | (Y=Z))))).
+%fof(ax_const1_covering, axiom, (![X,Y,Z,T]: ((const1(X,Y,T) & const1(X,Z,T)) => (~part(Y,Z) | (Y=Z))))).
 
-%fof(ax_const1_covering, axiom, (![X,Y,Z,T]: ((const1(X,Y,T) & const1(X,Z,T)) => (~overlap(Y,Z) | (Y=Z))))).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -267,7 +268,7 @@ fof(ax_const2_property2, axiom, (![Y]: (propQ(Y) => ![T]: (exists(Y,T) & ?[X]: (
 
 %fof(test_sub_composite, axiom, ((subcomposite(s11,s12,t)))). %CONSISTENT
 %fof(test_sub_coll, axiom, ((subcollective(s12,s13,t)))). %CONSISTENT
-fof(test_sub_composite, axiom, ((subcomposite(s11,s12,t) & subcollective(s12,s13,t)))). %CONSISTENT
+%fof(test_sub_composite, axiom, ((subcomposite(s11,s12,t) & subcollective(s12,s13,t)))). %CONSISTENT
 %fof(test_sub_coll, axiom, ((subcollective(s1,s2,t) & subcollective(s2,s3,t) & ~(subcollective(s1,s3,t))))).  %INCONSISTENT
 
 %Test of theorems:
@@ -312,7 +313,7 @@ fof(th_test_trans_sub_collective, conjecture, ((![X,Y,Z,T]: ((subcollective(X,Y,
 
 fof(th_test_trans_mix_member_component, conjecture, ((![X,Y,Z,T]: ((member(X,Y,T) & component(Y,Z,T)) => component(X,Z,T))))). %The prover fails, but see: test_trans_memebr_component
 
-fof(th_component_asymm, conjecture, ((?[X1,Y1,T1]: component(X1,Y1,T1)) => (![X,Y,T]: ((component(X,Y,T) => ~(component(Y,X,T))))))). %The prover fails but see: test_component_asymm
+fof(th_component_asymm, conjecture, (((![X,Y,T]: ((component(X,Y,T) => ~(component(Y,X,T)))))))). %The prover fails but see: test_component_asymm
 
 fof(th_test_comp_overlap, conjecture, ((![X,Y,T]: (component(X,Y,T) => ?[Z] : ((~(overlap(Z,X)) & component(Z,Y,T))))))). %The prover fails, but see: test_comp_overlap
 
