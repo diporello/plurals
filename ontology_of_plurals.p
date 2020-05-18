@@ -207,6 +207,20 @@ fof(ax_sub_collective, axiom, (![X,Y,T]: (subcollective(X,Y,T) <=> (?[A,B]: (con
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Composite, collectives, member, components. Component of collective.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+fof(ax_member_component, axiom, (![X,Y,T]: (collective(X) & composite(X) & member(Y,X,T)) => (component(Y,X,T)))).
+
+fof(ax_component_subcollective, axiom, (![X,Y,T]: (collective(X) & composite(X) & component(Y,X,T) & ?[Z]: (component(Z,Y,T) & member(Z,X,T))) => (subcollective(Y,X,T)))).
+
+fof(ax_component_of_collectives, axiom, (![X,Y,T]: (componentOfcollective(X,Y,T) <=> (collective(Y) & composite(Y) & component(X,Y,T) & (member(X,Y,T) | subcollective(X,Y,T)))))).
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Types of composite, collectives and pluralities
@@ -288,10 +302,6 @@ fof(ax_const2_property2, axiom, (![Y]: (propQ(Y) => ![T]: (exists(Y,T) & ?[X]: (
 
 
 %Mereology:%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%if X has proper parts, then it is the sum of two things.
-
-fof(cj_proper_parts_and_sums, conjecture, (![Y]: ((?[X]: (properPart(X,Y))) => (?[Y1,Y2]: (sum(Y,Y1,Y2)))))). %OK
 
 %Non-atomic objects are sums:
 
