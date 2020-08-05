@@ -241,6 +241,36 @@ fof(ax_component_of_collectives_d11, axiom, (![X,Y,T]: (componentOfcollective(X,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Types of composite, collectives and pluralities
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%propF and propG: examples of properties of pluralities
+%propP : example of a type of composites
+%propQ : example of a type of collectives
+%type : example of a type of members
+
+
+fof(ax_const1_property_f1, axiom, (![X,Y,T]: (propF(X,T) & ~atomic(X) & existsW(X,T)) =>
+                                ?[Y]: (propP(Y) & const1(Y,X,T) & ![T1]:(exists(Y,T1) => ?[X1]: (const1(Y,X1,T1) & propF(X1,T1)))))).
+
+fof(ax_const2_property_f2, axiom, (![X,Y,T]: (propG(X,T) & ~atomic(X) & existsW(X,T)) =>
+                                ?[Y]: (propQ(Y) & const2(Y,X,T) & ![T1]:(exists(Y,T1) => ?[X1]: (const2(Y,X1,T1) & propG(X1,T1)))))).
+
+fof(ax_const1_property2_f3, axiom, (![Y]: (propP(Y) => ![T]: (exists(Y,T) & ?[X]: (const1(Y,X,T) & propF(X,T)))))).
+
+fof(ax_const2_property2_f4, axiom, (![Y]: (propQ(Y) => ![T]: (exists(Y,T) & ?[X]: (const2(Y,X,T) & propG(X,T)))))).
+
+fof(ax_type_f5, axiom, (![X,Y,T]: ((propP(Y) & member(X,Y,T)) => type(Y)))).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %THEOREMS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
